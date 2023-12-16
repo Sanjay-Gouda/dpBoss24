@@ -1,1 +1,1 @@
-export const API_ENDPOINT = "http://localhost:7777/dpboss/api";
+export const API_ENDPOINT = "http://dashboard.dpboss24.in/api/";
