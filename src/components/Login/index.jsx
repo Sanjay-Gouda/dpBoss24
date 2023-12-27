@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_ENDPOINT } from "../Constants/httpinstance";
+import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -38,7 +38,10 @@ const Login = () => {
     };
 
     try {
-      const res = await fetch(`${API_ENDPOINT}/auth/login`, requestOptions);
+      const res = await fetch(
+        `${API_ENDPOINT_LOCAL}/auth/satta/login`,
+        requestOptions
+      );
 
       const data = await res.json();
       const token = data.result.accessToken;
