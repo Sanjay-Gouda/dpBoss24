@@ -1,11 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 const Table = ({ headers, data }) => {
-  console.log("Headerr..", headers);
-  console.log("data ..", data);
+  const token = localStorage.getItem("admin_token");
+  const [youtubeUrl, setYoutubeUrl] = useState([]);
+
+  const requestOptions = {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "69420",
+    },
+  };
+  const getUrls = async () => {
+    try {
+      const data = await fetch(
+        `${API_ENDPOINT_LOCAL}/video/list`,
+        requestOptions
+      );
+      const res = await data.json();
+      console.log(res);
+      setYoutubeUrl(res.result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getUrls();
+  }, []);
+
   return (
     <>
-      <div className="flex flex-col overflow-x-auto">
+      <div className="flex flex-col ">
         <div className="sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 sm:px-6 lg:px-8">
             <div className="relative overflow-x-auto shadow-md sm:rounded-lg">

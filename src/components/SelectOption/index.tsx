@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import SelectOption from "../Dropdown";
-import { API_ENDPOINT } from "../Constants/httpinstance";
+import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -9,18 +9,20 @@ const SelectOptionPage = () => {
   const [selectedOption, setSelectedOption] = useState();
   const [ticketValue, setTicketValue] = useState();
   const [loading, setLoading] = useState(false);
+  const [createdAt, setCreatedAt] = useState("");
 
   const token = localStorage.getItem("admin_token");
 
-  useEffect(() => {
-    toast.success("Welcome to the dashboard");
-  }, []);
+  // useEffect(() => {
+  //   toast.success("Welcome to the dashboard");
+  // }, []);
 
   const handleValidateTicket = async () => {
     setLoading(true);
     const payload = {
-      type: selectedOption,
-      value: ticketValue,
+      schedule: selectedOption,
+      ticketValue,
+      createdAt: createdAt,
     };
 
     const requestOptions = {
@@ -33,7 +35,10 @@ const SelectOptionPage = () => {
     };
 
     try {
-      const res = await fetch(`${API_ENDPOINT}/ticket/insert`, requestOptions);
+      const res = await fetch(
+        `${API_ENDPOINT_LOCAL}/satta/insert`,
+        requestOptions
+      );
       const data = await res.json();
       setLoading(false);
       console.log(data);
@@ -52,6 +57,25 @@ const SelectOptionPage = () => {
 
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.value);
+    console.log(e.target.value);
+    var currentDate = new Date();
+
+    // Define options for formatting the time
+    let options = {
+      hour12: false, // Use 24-hour format
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZone: "Asia/Kolkata", // Set the timezone to Asia/Kolkata
+    };
+
+    // Get the local time in 24-hour format as a string
+    let localTime24 = currentDate.toLocaleTimeString("en-IN", options);
+
+    const exactTime =
+      currentDate.toISOString().split("T")[0] + "T" + localTime24 + ".000Z";
+
+    setCreatedAt(exactTime);
   };
 
   const handleTicketValue = (e) => {

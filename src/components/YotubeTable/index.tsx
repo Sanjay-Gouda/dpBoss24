@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Table from "../Table";
+import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 const YoutubeTable = () => {
+  const [url, setUrl] = useState("");
+  const token = localStorage.getItem("admin_token");
+
+  var youtubeUrlRegex =
+    /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})$/;
   const data = [
     { srno: 1, youtubrurl: "https://www.youtube.com/watch?v=YT8rY_o5VhY" },
     { srno: 2, youtubrurl: "https://www.youtube.com/watch?v=YT8rY_o5VhY" },
@@ -11,6 +17,33 @@ const YoutubeTable = () => {
   ];
 
   const headers = ["SR No", "Youtube Urls", "Action"];
+
+  const handleUpload = async () => {
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "69420",
+      },
+      body: JSON.stringify({ url }),
+    };
+
+    if (youtubeUrlRegex.test(url)) {
+      try {
+        const res = await fetch(
+          `${API_ENDPOINT_LOCAL}/video/insert-url`,
+          requestOptions
+        );
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      alert("Pasted URL is not  youtube url");
+    }
+    console.log("working");
+  };
 
   return (
     <section className="bg-primary  w-full ">
@@ -24,11 +57,15 @@ const YoutubeTable = () => {
               <input
                 type="text"
                 name="youtube"
+                onChange={(e) => setUrl(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-3"
                 placeholder="url"
               />
 
-              <button className=" w-full bg-blue-100 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              <button
+                onClick={handleUpload}
+                className=" w-full bg-blue-100 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
                 Upload Video
               </button>
             </div>
