@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Table from "../Table";
 import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 const YoutubeTable = () => {
   const [url, setUrl] = useState("");
   const token = localStorage.getItem("admin_token");
+  const [youtubeUrl, setYoutubeUrl] = useState([]);
 
   var youtubeUrlRegex =
     /^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})$/;
@@ -19,30 +20,42 @@ const YoutubeTable = () => {
   const headers = ["SR No", "Youtube Urls", "Action"];
 
   const handleUpload = async () => {
-    const requestOptions = {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
-      },
-      body: JSON.stringify({ url }),
-    };
+    if (youtubeUrl.length < 10) {
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": "69420",
+        },
+        body: JSON.stringify({ url }),
+      };
 
-    if (youtubeUrlRegex.test(url)) {
-      try {
-        const res = await fetch(
-          `${API_ENDPOINT_LOCAL}/video/insert-url`,
-          requestOptions
-        );
-        console.log(res);
-      } catch (err) {
-        console.log(err);
+      if (youtubeUrlRegex.test(url)) {
+        setUrl("");
+        try {
+          const res = await fetch(
+            `${API_ENDPOINT_LOCAL}/video/insert-url`,
+            requestOptions
+          );
+          const data = await res.json();
+          console.log(data);
+
+          setYoutubeUrl([data.result, ...youtubeUrl]);
+
+          if (data.type === "ERROR") {
+            alert(data.message);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        alert("Pasted URL is not  youtube url");
       }
     } else {
-      alert("Pasted URL is not  youtube url");
+      setUrl("");
+      alert("You can only upload upto 10 youtube URLs");
     }
-    console.log("working");
   };
 
   return (
@@ -57,6 +70,7 @@ const YoutubeTable = () => {
               <input
                 type="text"
                 name="youtube"
+                value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 mb-3"
                 placeholder="url"
@@ -74,7 +88,12 @@ const YoutubeTable = () => {
       </div>
 
       <div className="container mx-auto mt-4">
-        <Table data={data} headers={headers} />
+        <Table
+          data={data}
+          headers={headers}
+          youtubeUrl={youtubeUrl}
+          setYoutubeUrl={setYoutubeUrl}
+        />
       </div>
     </section>
   );

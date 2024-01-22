@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import SelectOption from "../Dropdown";
-import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
