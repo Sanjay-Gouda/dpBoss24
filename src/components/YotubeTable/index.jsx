@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Table from "../Table";
 import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { ToastContainer, toast } from "react-toastify";
 
 const YoutubeTable = () => {
   const [url, setUrl] = useState("");
@@ -39,7 +40,6 @@ const YoutubeTable = () => {
             requestOptions
           );
           const data = await res.json();
-          console.log(data);
 
           setYoutubeUrl([data.result, ...youtubeUrl]);
 
@@ -47,19 +47,19 @@ const YoutubeTable = () => {
             alert(data.message);
           }
         } catch (err) {
-          console.log(err);
+          toast.error("Something went wrong");
         }
       } else {
-        alert("Pasted URL is not  youtube url");
+        toast.error("Pasted URL is not a Youtube url");
       }
     } else {
       setUrl("");
-      alert("You can only upload upto 10 youtube URLs");
+      toast.error("You can only upload upto 10 youtube URLs");
     }
   };
 
   return (
-    <section className="bg-primary  w-full ">
+    <section className="bg-primary  w-full">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto  lg:py-0">
         <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -95,6 +95,7 @@ const YoutubeTable = () => {
           setYoutubeUrl={setYoutubeUrl}
         />
       </div>
+      <ToastContainer position="top-center" />
     </section>
   );
 };

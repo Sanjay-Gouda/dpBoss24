@@ -51,6 +51,7 @@ const Login = () => {
 
       if (data.type === "SUCCESS") {
         navigate("/admin");
+        toast.success("Welcome to Dashboard");
       }
 
       if (data.type == "ERROR") {

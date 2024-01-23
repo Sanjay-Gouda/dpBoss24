@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route element={<PrivateRouets />}>
           <Route path="/admin" element={<SelectOptionPage />} />
-          <Route path="/youtube-table" element={<YoutubeTable />} />
+          <Route path="/upload" element={<YoutubeTable />} />
         </Route>
 
         <Route path="/" element={<Login />} />
