@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 import { useNavigate } from "react-router-dom";
 
 import { ToastContainer, toast } from "react-toastify";
@@ -33,14 +33,13 @@ const Login = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "ngrok-skip-browser-warning": "69420",
       },
       body: JSON.stringify(payload),
     };
 
     try {
       const res = await fetch(
-        `${API_ENDPOINT_LOCAL}/auth/satta/login`,
+        `${API_ENDPOINT}/auth/satta/login`,
         requestOptions
       );
 

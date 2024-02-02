@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Table from "../Table";
-import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 import { ToastContainer, toast } from "react-toastify";
 
 const YoutubeTable = () => {
@@ -27,7 +27,6 @@ const YoutubeTable = () => {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
-          "ngrok-skip-browser-warning": "69420",
         },
         body: JSON.stringify({ url }),
       };
@@ -36,15 +35,18 @@ const YoutubeTable = () => {
         setUrl("");
         try {
           const res = await fetch(
-            `${API_ENDPOINT_LOCAL}/video/insert-url`,
+            `${API_ENDPOINT}/video/insert-url`,
             requestOptions
           );
           const data = await res.json();
 
           setYoutubeUrl([data.result, ...youtubeUrl]);
 
+          if (data.type === "SUCCESS") {
+            toast.success(data.message);
+          }
           if (data.type === "ERROR") {
-            alert(data.message);
+            toast.error(data.message);
           }
         } catch (err) {
           toast.error("Something went wrong");

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import SelectOption from "../Dropdown";
-import { API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,13 +35,9 @@ const SelectOptionPage = () => {
     };
 
     try {
-      const res = await fetch(
-        `${API_ENDPOINT_LOCAL}/satta/insert`,
-        requestOptions
-      );
+      const res = await fetch(`${API_ENDPOINT}/satta/insert`, requestOptions);
       const data = await res.json();
       setLoading(false);
-      console.log(data);
 
       if (data.type === "SUCCESS") {
         toast.success(data.message);
@@ -108,6 +104,7 @@ const SelectOptionPage = () => {
               <input
                 type="text"
                 name="ticket"
+                value={ticketValue}
                 onChange={handleTicketValue}
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="ticket no"

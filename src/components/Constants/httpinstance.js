@@ -1,4 +1,4 @@
 export const API_ENDPOINT = "https://dashboard.dpboss24.in/api";
 
 export const API_ENDPOINT_LOCAL =
-  "https://369d-14-192-30-202.ngrok-free.app/api";
+  "https://f388-150-107-191-62.ngrok-free.app/api";
