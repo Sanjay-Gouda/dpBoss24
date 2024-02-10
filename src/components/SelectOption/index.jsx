@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const SelectOptionPage = () => {
+  const ticketIdRegex = /\d{3}-\d{1}/;
   const [selectedOption, setSelectedOption] = useState();
   const [ticketValue, setTicketValue] = useState();
   const [loading, setLoading] = useState(false);
@@ -42,7 +43,7 @@ const SelectOptionPage = () => {
       if (data.type === "SUCCESS") {
         toast.success(data.message);
       } else {
-        toast.info(data.message);
+        toast.error(data.message);
       }
     } catch (err) {
       console.log(err);
@@ -83,8 +84,11 @@ const SelectOptionPage = () => {
       toast.info("Please Select an Option");
     } else if (ticketValue === "") {
       toast.info("Please Enter Ticket Number");
+    } else if (!ticketIdRegex.test(ticketValue)) {
+      toast.info("Invalid ticket id !! Ticket Id must contain hyphen");
     } else {
       handleValidateTicket();
+      // alert("called");
     }
   };
 
