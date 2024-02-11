@@ -4,9 +4,11 @@ import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TicketTable from "../Table/ticket-table";
 
 const SelectOptionPage = () => {
   const ticketIdRegex = /\d{3}-\d{1}/;
+
   const [selectedOption, setSelectedOption] = useState();
   const [ticketValue, setTicketValue] = useState();
   const [loading, setLoading] = useState(false);
@@ -124,6 +126,9 @@ const SelectOptionPage = () => {
           </div>
         </div>
       </div>
+
+      <TicketTable />
+
       <ToastContainer position="top-center" />
     </section>
   );
