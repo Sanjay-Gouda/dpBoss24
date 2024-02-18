@@ -68,7 +68,7 @@ const SelectOption = ({ handleOptionChange }) => {
         <option selected value="">
           Select Time
         </option>
-        {Options?.map((opt) => (
+        {Options?.map((opt, ind) => (
           <option value={opt.value}>{opt.label}</option>
         ))}
       </select>

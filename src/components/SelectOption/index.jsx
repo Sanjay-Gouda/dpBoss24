@@ -13,6 +13,7 @@ const SelectOptionPage = () => {
   const [ticketValue, setTicketValue] = useState();
   const [loading, setLoading] = useState(false);
   const [createdAt, setCreatedAt] = useState("");
+  const [callIdAPI, setCallIdAPI] = useState(false);
 
   const token = localStorage.getItem("admin_token");
 
@@ -44,6 +45,7 @@ const SelectOptionPage = () => {
 
       if (data.type === "SUCCESS") {
         toast.success(data.message);
+        setCallIdAPI(true);
       } else {
         toast.error(data.message);
       }
@@ -127,7 +129,7 @@ const SelectOptionPage = () => {
         </div>
       </div>
 
-      <TicketTable />
+      <TicketTable callIdAPI={callIdAPI} />
 
       <ToastContainer position="top-center" />
     </section>

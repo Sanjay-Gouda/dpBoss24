@@ -4,7 +4,7 @@ import { API_ENDPOINT } from "../Constants/httpinstance";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const TicketTable = () => {
+const TicketTable = ({ callIdAPI }) => {
   const headers = ["SR No", "Schedule Time", "Ticket Id"];
 
   const token = localStorage.getItem("admin_token");
@@ -24,7 +24,6 @@ const TicketTable = () => {
         requestOptions
       );
       const res = await data.json();
-
       console.log(res.result, "res");
       setGeneratedId(res.result);
     } catch (err) {
@@ -34,7 +33,7 @@ const TicketTable = () => {
 
   useEffect(() => {
     getUrls();
-  }, []);
+  }, [callIdAPI]);
 
   return (
     <>
