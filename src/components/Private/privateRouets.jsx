@@ -2,8 +2,8 @@ import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../Sidebar";
 
 const PrivateRouets = () => {
-  // const token = localStorage.getItem("admin_token");
-  const token = true;
+  const token = localStorage.getItem("admin_token");
+  // const token = true;
 
   // let auth = { token: true };
 
