@@ -24,7 +24,6 @@ const TicketTable = ({ callIdAPI }) => {
         requestOptions
       );
       const res = await data.json();
-      console.log(res.result, "res");
       setGeneratedId(res.result);
     } catch (err) {
       console.log(err, "Error");

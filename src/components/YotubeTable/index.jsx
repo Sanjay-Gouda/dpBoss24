@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Table from "../Table";
-import { API_ENDPOINT, API_ENDPOINT_LOCAL } from "../Constants/httpinstance";
+import { API_ENDPOINT } from "../Constants/httpinstance";
 import { ToastContainer, toast } from "react-toastify";
 
 const YoutubeTable = () => {
