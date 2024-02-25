@@ -131,7 +131,7 @@ const SelectOptionPage = () => {
 
       <TicketTable callIdAPI={callIdAPI} />
 
-      <ToastContainer position="top-center" />
+      <ToastContainer />
     </section>
   );
 };

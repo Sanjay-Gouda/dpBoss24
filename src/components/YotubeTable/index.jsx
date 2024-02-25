@@ -97,7 +97,7 @@ const YoutubeTable = () => {
           setYoutubeUrl={setYoutubeUrl}
         />
       </div>
-      <ToastContainer position="top-center" />
+      <ToastContainer />
     </section>
   );
 };
